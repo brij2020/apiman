@@ -21,6 +21,8 @@ router.get(`/`, async (req,res) => {
 
     res.json({Js:`api done1!`})
 })
+router.use(`/auth`, require("./user/newUser"));
+router.use(`/auth`, require("./user/login"));
 router.use(`/products`, require("./product/product.list"));
 router.use(`/products`, require("./product/addproduct"));
 router.use(`/products`, require("./product/update.product"));

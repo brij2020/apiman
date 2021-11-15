@@ -20,14 +20,16 @@ router.post("/user/login", validate, async (req, res) => {
 	  
     if (user && (await bcrypt.compare(password, user.password))) {
 	    	const { type, name, age, _id } = user; 
-		const token = jwt.sign({
+        res.status(200).json({message: "login succefully", data:"test"});
+
+		 /*const token = jwt.sign({
 			name: name,
 			type: type,
 			email: email,
 			age: age,
 			id: _id
 		}, process.env.SECRET,{expiresIn:86400})
-	    res.status(200).json({ message: "login sucessfully", status: true,token: token });
+	    res.status(200).json({ message: "login sucessfully", status: true,token: token }); */
     } else {
       res.status(200).json({ message: "bad credentails", status: false });
     }

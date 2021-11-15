@@ -16,7 +16,7 @@ router.post("/user/login", validate, async (req, res) => {
     const { email, password } = req.body;
     const db = await getDatabase();
     const user = await db.collection("users").findOne({ email: email });
-//	console.log("user login",user);
+	  console.log("user login",user);
 	  
     if (user && (await bcrypt.compare(password, user.password))) {
 	    	const { type, name, age, _id } = user; 
@@ -32,7 +32,7 @@ router.post("/user/login", validate, async (req, res) => {
       res.status(200).json({ message: "bad credentails", status: false });
     }
   } catch (e) {
-    res.status(500).json({ message: "please try again taler", status: false });
+    res.status(500).json({ message: "please try again taler", status: false, data:JSON.stringify(e)});
   }
 });
 module.exports = router;

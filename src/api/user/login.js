@@ -22,13 +22,13 @@ router.post("/user/login", validate, async (req, res) => {
 	    	const { type, name, age, _id } = user; 
         res.status(200).json({message: "login succefully", data:"test"});
 
-		 /*const token = jwt.sign({
+		 const token = jwt.sign({
 			name: name,
 			type: type,
 			email: email,
-			age: age,
+      age: age,
 			id: _id
-		}, process.env.SECRET,{expiresIn:86400})
+		}, "STERETE8998858JUJFHKJ*8",{expiresIn:5860})
 	    res.status(200).json({ message: "login sucessfully", status: true,token: token }); */
     } else {
       res.status(200).json({ message: "bad credentails", status: false });

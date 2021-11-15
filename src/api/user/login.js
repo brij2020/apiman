@@ -29,7 +29,7 @@ router.post("/user/login", validate, async (req, res) => {
       age: age,
 			id: _id
 		}, "STERETE8998858JUJFHKJ*8",{expiresIn:5860})
-	    res.status(200).json({ message: "login sucessfully", status: true,token: token }); */
+	    res.status(200).json({ message: "login sucessfully", status: true,token: token });
     } else {
       res.status(200).json({ message: "bad credentails", status: false });
     }

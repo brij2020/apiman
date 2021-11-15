@@ -8,21 +8,21 @@ router.get('/lists', async (req, res) => {
         const data = await db.collection("products").find().toArray();
         if(Array.isArray(data)) {
             res.status(200).json({
-                message: "data fetched sucseccfully",
                 data: data,
-                status: true
+                status: true,
+                message: "data fetched sucseccfully"
             })
         } else {
-            res.status(400).json({
-                message: "no data found",
+            res.status(200).json({
                 data: [],
-                status: false
+                status: false,
+                message: "no data found"
             })
         }
     } catch(e) {
         res.status(500).json({
-            message: "server error",
-            status: false
+            status: false,
+            message: "server error"
         })
     }
 });

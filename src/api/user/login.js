@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { getDatabase } = require("../../db/mongo");
 const bcrypt = require("bcrypt");
-
+const jwt = require("jsonwebtoken");
 const validate = (req, res, next) => {
   const { email, password } = req.body;
   if (email && password) {
@@ -16,8 +16,18 @@ router.post("/user/login", validate, async (req, res) => {
     const { email, password } = req.body;
     const db = await getDatabase();
     const user = await db.collection("users").findOne({ email: email });
+//	console.log("user login",user);
+	  
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.status(200).json({ message: "login sucessfully", status: true });
+	    	const { type, name, age, _id } = user; 
+		const token = jwt.sign({
+			name: name,
+			type: type,
+			email: email,
+			age: age,
+			id: _id
+		}, process.env.SECRET,{expiresIn:86400})
+	    res.status(200).json({ message: "login sucessfully", status: true,token: token });
     } else {
       res.status(200).json({ message: "bad credentails", status: false });
     }

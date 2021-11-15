@@ -1,45 +1,48 @@
 const express = require("express");
-
+const path  =  require('path')
+const compression = require('compression');
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const { startDatabase, getDatabase } = require("./db/mongo");
-
+const passport = require('passport');
+const session = require('express-session');
+const { env } = process;
 const app = express();
-const multer  = require('multer')
+app.use(`${env.MEDIA_PATH}`, express.static(`${env.MEDIA_PATH}`));
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, '/tmp/my-uploads')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, file.fieldname + '-' + uniqueSuffix)
-  }
-})
-
-const upload = multer({ storage: storage })
-
-app.post('/stats', upload.single('uploaded_file'), function (req, res) {
-   // req.file is the name of your file in the form above, here 'uploaded_file'
-   // req.body will hold the text fields, if there were any 
-   console.log(req.file, res.body)
-});
 // allow to use body as json file 
 app.use(express.json({ limit: "50mb" }))
-
-
-// accessing public folder
-app.use(express.static(__dirname + '/public'));
-
 // adding Helmet to enhance your API's security
 app.use(helmet());
+app.use(compression());
 
 // enabling CORS for all requests
 app.use(cors());
+app.options('*', cors());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
+  
 // adding morgan to log HTTP requests
 app.use(morgan("combined"));
+
+app.use('/uploads', express.static('uploads'));
+
+/**
+ * Social media login 
+ */
+ app.use(session({
+  secret: 's3cr3t',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+//end 
+
 
 app.get(`/test`, (req, res) => {
   res.status(200).json({ et: `done test` });
@@ -56,6 +59,6 @@ startDatabase().then(async () => {
 });
 
 // start the server
-app.listen(3001, async () => {
-  console.log("listening on port 3001");
+app.listen(env.PORT || 8080, async () => {
+  console.log(`listening on port ${env.PORT}`);
 });

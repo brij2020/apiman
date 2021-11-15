@@ -7,7 +7,7 @@ router.post("/add", async (req, res) => {
   try {
     let resp = await db
       .collection("products")
-      .findOne({ p_name: req.body.p_title });
+      .findOne({ p_name: req.body.productname });
 
     if (!resp) {
       const { insertedId } = await db.collection("products").insertOne({
@@ -15,11 +15,12 @@ router.post("/add", async (req, res) => {
       });
 
       res.status(200).json({
-        message: "data inserted",
         data: {
           _id: insertedId,
           ...req.body
         },
+        status: true,
+        message: "data inserted"
       });
     } else {
       res.status(400).json({

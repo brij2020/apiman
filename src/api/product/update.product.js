@@ -10,7 +10,7 @@ router.post("/update", async (req, res) => {
     let resp = await db
       .collection("products")
       .findOne({ _id: ObjectId(req.body.id) });
-      console.log("test",resp)
+      
     if (resp) {
       const { insertedId } = await db.collection("products").update(
         {
@@ -23,11 +23,12 @@ router.post("/update", async (req, res) => {
         }
       );
       res.status(200).json({
-        message: "data updated ",
         data: {
-          _id: insertedId,
           ...req.body,
+          _id: insertedId,
         },
+        status: true,
+        message: "fields updated ",
       });
     } else {
       res.status(400).json({

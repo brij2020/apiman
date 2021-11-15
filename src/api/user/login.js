@@ -32,7 +32,8 @@ router.post("/user/login", validate, async (req, res) => {
       res.status(200).json({ message: "bad credentails", status: false });
     }
   } catch (e) {
-    res.status(500).json({ message: "please try again taler", status: false, data:JSON.stringify(e)});
+    res.send(e);
+    // res.status(500).json({ message: "please try again taler", status: false, data:JSON.stringify(e)});
   }
 });
 module.exports = router;

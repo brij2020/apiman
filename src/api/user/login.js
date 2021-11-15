@@ -11,7 +11,10 @@ const validate = (req, res, next) => {
     res.status(400).json({ status: false, message: "Bad request " });
   }
 };
-router.post("/user/signin", validate, async (req, res) => {
+router.post("/user/login", validate, async (req, res) => {
+
+  res.json({test:"fail"})
+  /*
   try {
     const { email, password } = req.body;
     const db = await getDatabase();
@@ -35,5 +38,6 @@ router.post("/user/signin", validate, async (req, res) => {
     res.send(e);
     // res.status(500).json({ message: "please try again taler", status: false, data:JSON.stringify(e)});
   }
+  */
 });
 module.exports = router;

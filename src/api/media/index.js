@@ -5,6 +5,7 @@ const { getDatabase } = require("../../db/mongo");
 const multer = require("multer");
 const path = require("path");
 const { env } = process;
+const { DOMAIN_NAME, PORT, MEDIA_PATH } = require("../../config");
 
 const validate = (req, res, next) => {
   const {
@@ -51,13 +52,7 @@ router.post(
     if(typeof req.file !== "undefined") {
       const { filename } = req.file;
       const { pid } = req.query;
-      const url =
-      process.env.DOMAIN_NAME +
-      process.env.PORT +
-      "/" +
-      process.env.MEDIA_PATH +
-      "/images/" +
-      filename;
+      const url = DOMAIN_NAME + PORT + "/" + MEDIA_PATH + "/images/" + filename;
       try {
         const db = await getDatabase();
         const { insertedId }  = await db

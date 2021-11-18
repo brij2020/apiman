@@ -7,8 +7,8 @@ router.post("/add", async (req, res) => {
   try {
     let resp = await db
       .collection("products")
-      .findOne({ p_name: req.body.productname });
-
+      .findOne({ productname: req.body.productname });
+	console.log("repop===",resp);
     if (!resp) {
       const { insertedId } = await db.collection("products").insertOne({
         ...req.body
@@ -23,8 +23,8 @@ router.post("/add", async (req, res) => {
         message: "data inserted"
       });
     } else {
-      res.status(400).json({
-        message: "data already exist",
+      res.status(200).json({
+        message: "data already exist.",
         data: [],
       });
     }

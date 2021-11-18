@@ -13,7 +13,7 @@
  const SUPPORT_EMAIL = "supprot.virtuladoc@gmail.com"
  const EMAIL_PASSWORD = "Su100$Br"
  const DOMAIN_NAME =  "https://manodyamapi.herokuapp.com"
- const PORT = "80"
+ const PORT = ""
  const MEDIA_PATH = "uploads"
  const MEDIA_TYEP_1 = "images"
  const MEDIA_TYEP_2 = "videos"

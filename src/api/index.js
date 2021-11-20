@@ -26,6 +26,13 @@ router.use(`/auth`, require("./user/login"));
 router.use(`/products`, require("./product/product.list"));
 router.use(`/products`, require("./product/addproduct"));
 router.use(`/products`, require("./product/update.product"));
+router.use(`/products`, require("./product/removeProducts"));
+
+router.use(`/appointments`, require("./appointment/appointments"));
+router.use(`/category`, require("./category"));
+
+
+
 router.use(`/upload`, require("./media"));
 
 

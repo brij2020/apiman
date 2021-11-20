@@ -2,14 +2,18 @@ const express = require("express");
 const router = express.Router();
 const { getDatabase } = require("../../db/mongo");
 
-router.post("/add", async (req, res) => {
+
+
+router.post("/new", async (req, res) => {
   const db = await getDatabase();
+  const { name } = req.body;
+
   try {
     let resp = await db
-      .collection("products")
-      .findOne({ productname: req.body.productname });
+      .collection("categories")
+      .findOne({name: name});
     if (!resp) {
-      const { insertedId } = await db.collection("products").insertOne({
+      const { insertedId } = await db.collection("categories").insertOne({
         ...req.body
       });
 
@@ -28,6 +32,7 @@ router.post("/add", async (req, res) => {
       });
     }
   } catch (e) {
+    console.log("error",e);
     res.status(500).json({
       message: "server error",
       error: e,
